@@ -5,8 +5,8 @@ function GuessInput() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const convertedGuess = guess.toUpperCase();
-    console.log({ guess: convertedGuess });
+    // When you write to the console in this way console.log({variableName}) it makes it clearer in the console what you are logging
+    console.log({ guess });
     setGuess("");
   };
 
@@ -15,13 +15,21 @@ function GuessInput() {
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         id="guess-input"
+        required
+        minLength={5}
+        maxLength={5}
+        // There seems to be a bug with minLength/maxLength so we will use pattern for now
+        pattern="^[a-zA-Z]{5}$"
+        // This will show up in the pattern validation text to give the user information
+        title="5 letter word"
         type="text"
         value={guess}
-        onChange={(event) => setGuess(event.target.value)}
-        style={{ textTransform: "uppercase" }}
-        minLength={5}
-        pattern="^[a-zA-Z]{5}$"
-        required
+        onChange={(event) => {
+          // We change the guess to uppercase as soon as it is entered
+          // Josh prefers to put this part on a separate line, but that's up to preference
+          const nextGuess = event.target.value.toUpperCase();
+          setGuess(nextGuess);
+        }}
       />
     </form>
   );
