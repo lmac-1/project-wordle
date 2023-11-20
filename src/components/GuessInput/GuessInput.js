@@ -1,6 +1,6 @@
 import React from "react";
 
-function GuessInput() {
+function GuessInput({ guesses, setGuesses }) {
   const [guess, setGuess] = React.useState("");
 
   const handleSubmit = (e) => {
@@ -8,6 +8,9 @@ function GuessInput() {
     // When you write to the console in this way console.log({variableName}) it makes it clearer in the console what you are logging
     console.log({ guess });
     setGuess("");
+
+    const nextGuesses = [...guesses, guess];
+    setGuesses(nextGuesses);
   };
 
   return (
