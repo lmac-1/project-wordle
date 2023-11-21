@@ -1,13 +1,13 @@
 import React from "react";
+import Guess from "../Guess";
+import { range } from "../../utils";
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 function GuessResults({ guesses }) {
   return (
     <div className="guess-results">
-      {guesses.map((guess, index) => (
-        // We can use index as the key here because the order shouldn't change in the context of wordle change
-        <p className="guess" key={index}>
-          {guess}
-        </p>
+      {range(NUM_OF_GUESSES_ALLOWED).map((el) => (
+        <Guess key={el} guess={guesses[el]} />
       ))}
     </div>
   );
