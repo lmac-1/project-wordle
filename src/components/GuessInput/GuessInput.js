@@ -1,6 +1,6 @@
 import React from "react";
 
-function GuessInput({ handleSubmitGuess }) {
+function GuessInput({ handleSubmitGuess, gameStatus }) {
   // Exercise 2: renamed variable to tentativeGuess so it's really clear that it's a guess in progress
   const [tentativeGuess, setTentativeGuess] = React.useState("");
 
@@ -19,6 +19,7 @@ function GuessInput({ handleSubmitGuess }) {
       <input
         id="guess-input"
         required
+        disabled={gameStatus === "lost" || gameStatus === "won"}
         minLength={5}
         maxLength={5}
         // There seems to be a bug with minLength/maxLength so we will use pattern for now
