@@ -6,7 +6,6 @@ import GuessInput from "../GuessInput";
 import GuessResults from "../GuessResults";
 import LostBanner from "../LostBanner";
 import WonBanner from "../WonBanner";
-import { checkGuess } from "../../game-helpers";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 // Pick a random word on every pageload.
@@ -15,29 +14,21 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
+  // gameStatus can be 'running', 'won', or 'lost'
+  const [gameStatus, setGameStatus] = React.useState("running");
   const [guesses, setGuesses] = React.useState([]);
-  const [gameStatus, setGameStatus] = React.useState("");
 
-  const handleSubmitGuess = (guess) => {
-    setGuesses([...guesses, guess]);
-    // We have to do this as setting state is asynchronous and won't update until this entire function runs
-    const totalGuesses = guesses.length + 1;
-    // Checks to see if the user has won or not
-    checkGameStatus(guess, answer, totalGuesses);
-  };
+  const handleSubmitGuess = (tentativeGuess) => {
+    // Exercise 5: We need to create this so that we can correctly check the length of the guesses within this function to check if the player has lost.
+    // setState is a function that is run on the NEXT render. So the state won't update until this entire function has run.
+    const nextGuesses = [...guesses, tentativeGuess];
+    setGuesses(nextGuesses);
 
-  const checkGameStatus = (guess, answer, totalGuesses) => {
-    const result = checkGuess(guess, answer);
-    const win = result.every((element) => element.status === "correct");
-
-    if (win) {
+    // We are checking it's capitalised just to make sure that it doesn't break if the code changes somewhere else in the future
+    if (tentativeGuess.toUpperCase() === "answer") {
       setGameStatus("won");
-    }
-
-    if (!win && totalGuesses === NUM_OF_GUESSES_ALLOWED) {
+    } else if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
       setGameStatus("lost");
-    } else {
-      setGameStatus("running");
     }
   };
 
@@ -48,7 +39,7 @@ function Game() {
         gameStatus={gameStatus}
         handleSubmitGuess={handleSubmitGuess}
       />
-      {gameStatus === "won" && <WonBanner numberOfGuesses={guesses.length} />}
+      {gameStatus === "won" && <WonBanner numOfGuesses={guesses.length} />}
       {gameStatus === "lost" && <LostBanner answer={answer} />}
     </>
   );

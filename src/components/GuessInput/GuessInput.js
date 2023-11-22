@@ -19,7 +19,7 @@ function GuessInput({ handleSubmitGuess, gameStatus }) {
       <input
         id="guess-input"
         required
-        disabled={gameStatus === "lost" || gameStatus === "won"}
+        disabled={gameStatus !== "running"}
         minLength={5}
         maxLength={5}
         // There seems to be a bug with minLength/maxLength so we will use pattern for now

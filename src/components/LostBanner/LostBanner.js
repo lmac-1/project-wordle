@@ -3,7 +3,7 @@ import Banner from "../Banner";
 
 function LostBanner({ answer }) {
   return (
-    <Banner className="sad">
+    <Banner status="sad">
       <p>
         Sorry, the correct answer is <strong>{answer}</strong>.
       </p>

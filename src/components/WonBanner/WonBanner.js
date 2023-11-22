@@ -1,13 +1,13 @@
 import React from "react";
 import Banner from "../Banner";
 
-function WonBanner({ numberOfGuesses }) {
+function WonBanner({ numOfGuesses }) {
   return (
-    <Banner className="happy">
+    <Banner status="happy">
       <p>
         <strong>Congratulations!</strong> Got it in{" "}
         <strong>
-          {numberOfGuesses} {numberOfGuesses === 1 ? "guess" : "guesses"}
+          {numOfGuesses === 1 ? "guess" : `${numOfGuesses} guesses`}
         </strong>
         .
       </p>
